@@ -1,0 +1,97 @@
+{
+  "ping": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "ping"
+  },
+  "time": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "time"
+  },
+  "system_status": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "time"
+  },
+  "exchange_info": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "exchange_info"
+  },
+  "tickers": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "tickers"
+  },
+  "ticker": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "ticker"
+  },
+  "depth": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "depth"
+  },
+  "trades": {
+    "client": "public",
+    "action": "get",
+    "endpoint": "trades"
+  },
+  "historical_trades": {
+    "client": "signed",
+    "action": "get",
+    "endpoint": "historical_trades"
+  },
+  "create_order": {
+    "client": "signed",
+    "action": "post",
+    "endpoint": "order"
+  },
+  "create_test_order": {
+    "client": "signed",
+    "action": "post",
+    "endpoint": "test_order"
+  },
+  "query_order": {
+    "client": "signed",
+    "action": "get",
+    "endpoint": "order"
+  },
+  "cancel_order": {
+    "client": "signed",
+    "action": "delete",
+    "endpoint": "order"
+  },
+  "open_orders": {
+    "client": "signed",
+    "action": "get",
+    "endpoint": "open_orders"
+  },
+  "cancel_open_orders": {
+    "client": "signed",
+    "action": "delete",
+    "endpoint": "open_orders"
+  },
+  "all_orders": {
+    "client": "signed",
+    "action": "get",
+    "endpoint": "all_orders"
+  },
+  "account_info": {
+    "client": "signed",
+    "action": "get",
+    "endpoint": "account"
+  },
+  "funds_info": {
+    "client": "signed",
+    "action": "get",
+    "endpoint": "funds"
+  },
+  "create_auth_token": {
+    "client": "signed",
+    "action": "post",
+    "endpoint": "create_auth_token"
+  }
+}
