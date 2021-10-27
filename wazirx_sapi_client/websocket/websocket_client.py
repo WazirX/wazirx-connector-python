@@ -38,7 +38,7 @@ class WebsocketClient(BaseWebsocketClient):
             self.auth_key = response["auth_key"]
         return self.auth_key
 
-    async def connect(self, uri="wss://stream.hellopye.com/stream"):
+    async def connect(self, uri="wss://stream.wazirx.com/stream"):
         websocket = await websockets.connect(uri=uri)
         self.connections = dict()
         self.connections["websocket"] = websocket

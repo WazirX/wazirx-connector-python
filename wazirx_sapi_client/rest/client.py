@@ -12,7 +12,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 class BaseClient(object):
-    API_URL = 'https://api.hellopye.com/sapi/'
+    API_URL = 'https://api.wazirx.com/sapi/'
 
     def __init__(
             self, api_key="", secret_key=""
