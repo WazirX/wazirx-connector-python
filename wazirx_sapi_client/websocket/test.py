@@ -16,7 +16,10 @@ async def main():
         ws_client = WebsocketClient(api_key=api_key, secret_key=secret_key)
 
     """
-    api_key, secret_key = "test_api_key", "test_secret_key"
+    # Keys for private events
+    api_key = "test_api_key"
+    secret_key = "test_secret_key"
+
     ws_client = WebsocketClient(api_key=api_key, secret_key=secret_key)
 
     asyncio.create_task(
@@ -38,11 +41,11 @@ async def main():
     )
 
     await ws_client.subscribe(
-        events=["balanceUpdate"],
+        events=["outboundAccountPosition"],
         id=2  # id param not mandatory
     )
     # await ws_client.unsubscribe(
-    #     events=["balanceUpdate", "wrxinr@depth"],
+    #     events=["outboundAccountPosition", "wrxinr@depth"],
     # )
 
 
