@@ -10,7 +10,7 @@ This is a Python3 wrapper for the `WazirX <https://wazirx.com>`__ public apis an
 
 
 Documentation
-  https://wazirx.github.io/#public-api-endpoints
+  https://docs.wazirx.com/
 
 Features
 --------
@@ -40,23 +40,23 @@ Quick Start
     from wazirx_sapi_client.rest import Client
 
     # public
-    c = Client()
-    print(c.send("ping"))
-    print(c.send("time"))
-    print(c.send("system_status"))
-    print(c.send("exchange_info"))
+    client = Client()
+    print(client.send("ping"))
+    print(client.send("time"))
+    print(client.send("system_status"))
+    print(client.send("exchange_info"))
 
     # private
     api_key = "test_api_key"
     secret_key = "test_secret_key"
 
-    c = Client(api_key=api_key, secret_key=secret_key)
+    client = Client(api_key=api_key, secret_key=secret_key)
 
-    print(c.send("historical_trades",
+    print(client.send("historical_trades",
                  {"limit": 10, "symbol": "btcinr", "recvWindow": 10000, "timestamp": int(time.time() * 1000)}
                  ))
 
-    print(c.send('create_order',
+    print(client.send('create_order',
                  {"symbol": "btcinr", "side": "buy", "type": "limit", "price": 500, "quantity": 1, "recvWindow": 10000,
                   "timestamp": int(time.time() * 1000)}))
 
@@ -99,13 +99,13 @@ Quick Start
     )
 
     await ws_client.subscribe(
-        events=["balanceUpdate"],
+        events=["outboundAccountPosition"],
         id=2  # id param not mandatory
     )
 
     ### to unsubscribe
     #await ws_client.unsubscribe(
-    #    events=["balanceUpdate", "wrxinr@depth"],
+    #    events=["outboundAccountPosition", "wrxinr@depth"],
     #)
 
     loop = asyncio.get_event_loop()
