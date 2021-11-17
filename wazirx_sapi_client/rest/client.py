@@ -51,7 +51,7 @@ class Client(BaseClient):
         elif request_method == "post":
             response = requests.post(url, data=kwargs, headers=headers)
         elif request_method == "delete":
-            response = requests.post(url, data=kwargs, headers=headers)
+            response = requests.delete(url, data=kwargs, headers=headers)
         if response is not None:
             return response.status_code, response.json()
         raise BaseException("Invalid Request Type")
