@@ -37,6 +37,7 @@ Quick Start
 
 .. code::
 
+    import time
     from wazirx_sapi_client.rest import Client
 
     # public
@@ -74,39 +75,41 @@ Quick Start
 
     """
 
+    import asyncio
     from wazirx_sapi_client.websocket import WebsocketClient
 
-    api_key, secret_key = "test_api_key", "test_secret_key"
-    ws_client = WebsocketClient(api_key=api_key, secret_key=secret_key)
+    async def main():
+        api_key, secret_key = "test_api_key", "test_secret_key"
+        ws_client = WebsocketClient(api_key=api_key, secret_key=secret_key)
 
-    asyncio.create_task(
-        ws_client.connect(
+        asyncio.create_task(
+            ws_client.connect(
+            )
         )
-    )
 
-    # to subscribe
-    await ws_client.subscribe(
-        events=["btcinr@depth"],
-    )
+        # to subscribe
+        await ws_client.subscribe(
+            events=["btcinr@depth"],
+        )
 
-    await ws_client.subscribe(
-        events=["wrxinr@depth"],
-        id=1  # id param not mandatory
-    )
+        await ws_client.subscribe(
+            events=["wrxinr@depth"],
+            id=1  # id param not mandatory
+        )
 
-    await ws_client.subscribe(
-        events=["orderUpdate"]
-    )
+        await ws_client.subscribe(
+            events=["orderUpdate"]
+        )
 
-    await ws_client.subscribe(
-        events=["outboundAccountPosition"],
-        id=2  # id param not mandatory
-    )
+        await ws_client.subscribe(
+            events=["outboundAccountPosition"],
+            id=2  # id param not mandatory
+        )
 
-    ### to unsubscribe
-    #await ws_client.unsubscribe(
-    #    events=["outboundAccountPosition", "wrxinr@depth"],
-    #)
+        ### to unsubscribe
+        #await ws_client.unsubscribe(
+        #    events=["outboundAccountPosition", "wrxinr@depth"],
+        #)
 
     loop = asyncio.get_event_loop()
     loop.create_task(main())
