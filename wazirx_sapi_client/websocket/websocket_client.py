@@ -132,6 +132,40 @@ class WebsocketClient(BaseWebsocketClient):
             id=id
         )
 
+    async def trades(self, symbol=[], id=0, action="subscribe"):
+        events = []
+        if symbol:
+            for s in symbol:
+                events.append(s+"@trades")
+        await self._sub_unsub(event=action, subscription=events, id=id)
+
+    async def depth(self, symbol=[], id=0, action="subscribe"):
+        events = []
+        if symbol:
+            for s in symbol:
+                events.append(s+"@depth")
+        await self._sub_unsub(event=action, subscription=events, id=id)
+
+    async def all_market_ticker(self, id=0, action="subscribe"):
+        events = ["!ticker@arr"]
+        await self._sub_unsub(event=action, subscription=events, id=id)
+
+    async def user_stream(self, streams=[], id=0, action="subscribe"):
+        if all([self.api_key, self.secret_key]) and (not self.auth_key):
+            self.get_auth_token()
+        await self._sub_unsub(event=action, subscription=streams, id=id)
+
+    async def multi_stream(self, streams=[], id=0, action="subscribe"):
+        if all([self.api_key, self.secret_key]) and (not self.auth_key):
+            self.get_auth_token()
+        format_streams = []
+        for stream in streams:
+            if stream['type'] == 'ticker':
+                format_streams.append('!ticker@arr')
+            if stream['type'] ==  'depth' or stream['type'] == 'trades':
+                format_streams += self.get_mapped_streams(symbols=stream['symbol'], type=stream['type'])
+        await self._sub_unsub(event=action, subscription=format_streams, id=id)
+
     async def unsubscribe(
             self,
             events=[]
@@ -142,3 +176,8 @@ class WebsocketClient(BaseWebsocketClient):
             subscription=events,
 
         )
+    def get_mapped_streams(self, symbols=[], type=""):
+        events = []
+        for s in symbols:
+            events.append(s+"@"+type)
+        return events

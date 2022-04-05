@@ -10,7 +10,7 @@ from wazirx_sapi_client.websocket import WebsocketClient
 
 async def main():
     """
-    For public streams, api_key,secret_key is not required i.e.
+    For public streams, api_key, secret_key is not required i.e.
         ws_client = WebsocketClient()
     For private streams, api_key, secret_key are required while initialising WebsocketClient i.e.
         ws_client = WebsocketClient(api_key=api_key, secret_key=secret_key)
@@ -26,27 +26,10 @@ async def main():
         ws_client.connect(
         )
     )
-
-    await ws_client.subscribe(
-        events=["btcinr@depth"],
-    )
-
-    await ws_client.subscribe(
-        events=["wrxinr@depth"],
-        id=1  # id param not mandatory
-    )
-
-    await ws_client.subscribe(
-        events=["orderUpdate"]
-    )
-
-    await ws_client.subscribe(
-        events=["outboundAccountPosition"],
-        id=2  # id param not mandatory
-    )
-    # await ws_client.unsubscribe(
-    #     events=["outboundAccountPosition", "wrxinr@depth"],
-    # )
+    await ws_client.trades(symbol=['wrxinr','btcinr'])
+    await ws_client.depth(symbol=['wrxinr','btcinr'])
+    await ws_client.user_stream(streams=['orderUpdate', 'ownTrade', 'outboundAccountPosition'])
+    await ws_client.multi_stream(streams=[{'symbol': ['wrxinr','btcinr'], 'type': 'depth'}, {'symbol':['wrxinr','btcinr'], 'type':'trades'}, {'type':'ticker'}])
 
 
 if __name__ == "__main__":
