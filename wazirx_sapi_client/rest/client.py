@@ -19,7 +19,7 @@ class BaseClient(object):
     ):
         self.api_key = api_key
         self.secret_key = secret_key
-        self.api_mapper = json.load(open(PROJECT_ROOT + "/api_mapper.json", "r"))
+        self.api_mapper = json.load(open(f'{PROJECT_ROOT}/api_mapper.json', "r"))
 
 
 class Client(BaseClient):
@@ -48,9 +48,7 @@ class Client(BaseClient):
         response = None
         if request_method == "get":
             response = requests.get(url, params=kwargs, headers=headers)
-        elif request_method == "post":
-            response = requests.post(url, data=kwargs, headers=headers)
-        elif request_method == "delete":
+        elif request_method in ["post", "delete"]:
             response = requests.post(url, data=kwargs, headers=headers)
         if response is not None:
             return response.status_code, response.json()
@@ -67,6 +65,4 @@ class Client(BaseClient):
 
     def _get_signature(self, api_detail, kwargs={}):
         sign_payload = urllib.parse.urlencode(kwargs)
-        signature = hmac.new(bytes(self.secret_key, 'latin-1'), msg=bytes(sign_payload, 'latin-1'),
-                             digestmod=hashlib.sha256).hexdigest()
-        return signature
+        return hmac.new(bytes(self.secret_key, 'latin-1'), msg=bytes(sign_payload, 'latin-1'), digestmod=hashlib.sha256).hexdigest()

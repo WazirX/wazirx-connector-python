@@ -40,7 +40,7 @@ class WebsocketClient(BaseWebsocketClient):
 
     async def connect(self, uri="wss://stream.wazirx.com/stream"):
         websocket = await websockets.connect(uri=uri)
-        self.connections = dict()
+        self.connections = {}
         self.connections["websocket"] = websocket
         self.connections["subscriptions"] = []
         _thread = threading.Thread(target=asyncio.run, args=(self.send_heartbeat(),))
@@ -135,15 +135,13 @@ class WebsocketClient(BaseWebsocketClient):
     async def trades(self, symbol=[], id=0, action="subscribe"):
         events = []
         if symbol:
-            for s in symbol:
-                events.append(s+"@trades")
+            events.extend(f'{s}@trades' for s in symbol)
         await self._sub_unsub(event=action, subscription=events, id=id)
 
     async def depth(self, symbol=[], id=0, action="subscribe"):
         events = []
         if symbol:
-            for s in symbol:
-                events.append(s+"@depth")
+            events.extend(f'{s}@depth' for s in symbol)
         await self._sub_unsub(event=action, subscription=events, id=id)
 
     async def all_market_ticker(self, id=0, action="subscribe"):
@@ -162,7 +160,7 @@ class WebsocketClient(BaseWebsocketClient):
         for stream in streams:
             if stream['type'] == 'ticker':
                 format_streams.append('!ticker@arr')
-            if stream['type'] ==  'depth' or stream['type'] == 'trades':
+            if stream['type'] in ['depth', 'trades']:
                 format_streams += self.get_mapped_streams(symbols=stream['symbol'], type=stream['type'])
         await self._sub_unsub(event=action, subscription=format_streams, id=id)
 
@@ -177,7 +175,4 @@ class WebsocketClient(BaseWebsocketClient):
 
         )
     def get_mapped_streams(self, symbols=[], type=""):
-        events = []
-        for s in symbols:
-            events.append(s+"@"+type)
-        return events
+        return [f'{s}@{type}' for s in symbols]
