@@ -24,9 +24,9 @@ pip3 install -r requirements.txt
   * No need to generate timestamps
   * No need to generate signatures
 * Basic implementation of WebSocket API
-  * Pass procs or lambdas to event handlers
+  * Create task using `asyncio` inside async main function
   * Single and multiple streams supported
-  * Runs on EventMachine
+  * All methods runs with `await` call inside async function
 
 #### Planned
 
@@ -133,7 +133,9 @@ Response:
 "status"=>"wait", "price"=>"210.0", "origQty"=>"2.0", "executedQty"=>"0.0",
 "createdTime"=>1632310960000, "updatedTime"=>1632310960000}
 ```
-##### For other methods follow [this](https://github.com/WazirX/wazirx-connector-python/blob/master/wazirx_sapi_client/rest/api_mapper.json).
+##### For other api methods follow [this](https://github.com/WazirX/wazirx-connector-python/blob/master/wazirx_sapi_client/rest/api_mapper.json).
+
+##### For example and better understanding the api client usage refer [here](https://github.com/WazirX/wazirx-connector-python/blob/master/wazirx_sapi_client/rest/test.py)
 
 Required and optional parameters, as well as enum values, can be found on the [Wazirx Documentation](https://docs.wazirx.com). Parameters should always be passed to client methods as keyword arguments in snake_case form.
 
@@ -190,13 +192,17 @@ Request a listen key from the REST API, and then create a WebSocket stream using
 await ws.user_stream(streams=['orderUpdate', 'ownTrade', 'outboundAccountPosition'], id=0, action='subscribe')
 ```
 
-To make sure that websocket stays live add the given below code for your `main`, for understanding better refer [here](https://github.com/WazirX/wazirx-connector-python/blob/master/wazirx_sapi_client/websocket/test.py)
+To make sure that websocket stays live add the given below code for your `main`.
 
 ```python
 loop = asyncio.get_event_loop()
 loop.create_task(main())
 loop.run_forever()
 ```
+
+##### For other websocket methods follow [this](https://github.com/WazirX/wazirx-connector-python/blob/master/wazirx_sapi_client/websocket/websocket_client.py).
+
+##### For example and better understanding the websocket client usage refer [here](https://github.com/WazirX/wazirx-connector-python/blob/master/wazirx_sapi_client/websocket/test.py)
 
 ## Development
 
