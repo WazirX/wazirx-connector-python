@@ -9,6 +9,7 @@ This is an official Python wrapper for the Wazirx exchange REST and WebSocket AP
 We are now at 1.0 and there may be things breaking, don't hesitate to raise an issue if you feel so!
 
 ## Installation
+Generate **API KEY** and **Secret Key** from Wazirx website [here](https://wazirx.com/settings/keys)
 
 ```python
 pip3 install -r requirements.txt
